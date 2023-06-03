@@ -13,6 +13,10 @@ interface Prop {
   name: string
   active: number
   order: number
+  currentPage: number
+  totalPages: number
+  perPage: number
+  totalItems: number
 }
 
 type Props = Prop[]
@@ -30,6 +34,14 @@ const props = computed<Props>(() => store.props)
     <b-row>
       <ProductList v-for="prop in props" :key="prop.id" v-bind="prop" />
     </b-row>
+    <div class="d-flex justify-content-center">
+      <b-pagination
+        v-model="props.currentPage"
+        :total-rows="props.totalItems"
+        :per-page="props.perPage"
+        aria-controls="my-table"
+      />
+    </div>
   </div>
 </template>
 

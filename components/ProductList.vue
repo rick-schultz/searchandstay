@@ -17,7 +17,7 @@ const props = defineProps<Props>()
 const { id, name, active, editProduct } = toRefs(props)
 
 const localName = ref(name.value)
-const localActive = ref(active.value)
+const localActive = ref(active.value ?? 1)
 
 watch(localActive, () => {
   console.log(Number(localActive.value))
@@ -79,7 +79,10 @@ function updateProduct () {
         Add
       </b-button>
       <b-button v-if="id && !editProduct" variant="primary" @click="editProductPage()">
-        Edit
+        Edit Page
+      </b-button>
+      <b-button v-if="!editProduct && id" variant="primary" @click="store.updateProp(id, localName, localActive)">
+        Update
       </b-button>
       <b-button v-if="editProduct" variant="primary" @click="updateProduct()">
         Update
