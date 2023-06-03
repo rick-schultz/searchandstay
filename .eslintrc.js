@@ -9,7 +9,7 @@ module.exports = {
     '@nuxtjs/eslint-config-typescript'
   ],
   rules: {
-    'multi-word-component-names': 'off',
+    'vue/multi-word-component-names': 'off',
     'arrow-parens': 'off'
   }
 }
