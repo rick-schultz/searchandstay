@@ -4,11 +4,12 @@ module.exports = {
     node: true
   },
   extends: [
-    'plugin:vue/vue3-recommended',
+    'plugin:vue/recommended',
     'eslint:recommended',
     '@nuxtjs/eslint-config-typescript'
   ],
   rules: {
-    'vue/multi-word-component-names': 'off'
+    'multi-word-component-names': 'off',
+    'arrow-parens': 'off'
   }
 }
