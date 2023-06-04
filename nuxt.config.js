@@ -58,7 +58,7 @@ export default {
   },
 
   env: {
-    API_URL: process.env.API_URL,
-    API_TOKEN: process.env.API_TOKEN
+    API_URL: process.env.API_URL || 'https://sys-dev.searchandstay.com/api/admin/house_rules/',
+    API_TOKEN: process.env.API_TOKEN || 'Bearer 40fe071962846075452a4f6123ae71697463cad20f51e237e2035b41af0513d8'
   }
 }

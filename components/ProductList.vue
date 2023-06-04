@@ -79,7 +79,7 @@ function updateProduct () {
         Add
       </b-button>
       <b-button v-if="id && !editProduct" variant="primary" @click="editProductPage()">
-        Edit Page
+        Edit Product
       </b-button>
       <b-button v-if="!editProduct && id" variant="primary" @click="store.updateProp(id, localName, localActive)">
         Update
