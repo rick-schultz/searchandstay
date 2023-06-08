@@ -2,11 +2,15 @@
   <span />
 </template>
 
-<script>
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
-export default {
-  created () {
-    this.$router.push('/home')
-  }
-}
+const router = useRouter()
+
+onMounted(() => {
+  setTimeout(() => {
+    router.push('/home')
+  }, 2000)
+})
 </script>
