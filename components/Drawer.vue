@@ -1,17 +1,5 @@
 <template>
   <v-container>
-    <!-- <v-list>
-      <v-list-item to="/home">
-        <v-list-item-title>
-          Places to Stay
-        </v-list-item-title>
-      </v-list-item>
-      <v-list-item to="/new-product">
-        <v-list-item-title>
-          List your Propery
-        </v-list-item-title>
-      </v-list-item>
-    </v-list> -->
     <div class="tw-flex tw-flex-col tw-gap-3">
       <v-btn
         variant="plain"

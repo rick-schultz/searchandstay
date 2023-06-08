@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { computed } from "vue";
-import { getActivePinia } from 'pinia'
-import { useHouseRulesStore } from '@/store/houseRules'
+import { getActivePinia } from "pinia";
+import { useHouseRulesStore } from "@/store/houseRules";
 import { Entity } from "@/types";
 
 const dialog = ref(false);
@@ -11,7 +11,7 @@ const toggleDialog = () => {
   dialog.value = !dialog.value;
 };
 
-const store = useHouseRulesStore(getActivePinia())
+const store = useHouseRulesStore(getActivePinia());
 
 interface Prop extends Entity {
   id: number;
@@ -20,30 +20,25 @@ interface Prop extends Entity {
   page: number;
 }
 
-const prop = defineProps<Prop>()
+const prop = defineProps<Prop>();
 
-const { id } = toRefs(prop)
+const { id } = toRefs(prop);
 
 const nextPage = computed(() => {
-  return Math.floor(store.houseRules.data.pagination.total / store.houseRules.data.pagination.per_page - 0.1);
-})
+  return Math.floor(
+    store.houseRules.data.pagination.total /
+      store.houseRules.data.pagination.per_page -
+      0.1
+  );
+});
 </script>
 
 <template>
   <div class="text-center">
-    <v-dialog
-      v-model="dialog"
-      width="auto"
-      @click:outside="toggleDialog"
-    >
+    <v-dialog v-model="dialog" width="auto" @click:outside="toggleDialog">
       <template #activator="{ props }">
-        <v-btn
-          v-bind="props"
-          color="error"
-        >
-          <v-icon left>
-            mdi-trash-can
-          </v-icon>
+        <v-btn v-bind="props" color="error">
+          <v-icon left> mdi-trash-can </v-icon>
         </v-btn>
       </template>
 
@@ -59,11 +54,7 @@ const nextPage = computed(() => {
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn
-            color="blue-darken-1"
-            variant="text"
-            @click="toggleDialog"
-          >
+          <v-btn color="blue-darken-1" variant="text" @click="toggleDialog">
             Close
           </v-btn>
           <v-btn
