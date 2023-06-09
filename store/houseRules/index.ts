@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 // import { useRuntimeConfig } from '#imports'
-import { HouseRulesProps } from '@/types'
 import axios from 'axios'
+import { HouseRulesProps } from '@/types';
 
 // const { apiUrl: API_URL, apiToken: API_TOKEN }  = useRuntimeConfig()
 
@@ -10,8 +10,8 @@ const API_TOKEN = 'Bearer 40fe071962846075452a4f6123ae71697463cad20f51e237e2035b
 
 export const useHouseRulesStore = defineStore('houseRules', {
   state: () => ({
-      houseRules: {} as HouseRulesProps,
-    }),
+    houseRules: {} as HouseRulesProps
+  }),
   actions: {
     async fetchHouseRules(page: number = 1) {
       try {
@@ -21,6 +21,25 @@ export const useHouseRulesStore = defineStore('houseRules', {
           }
         })
         this.houseRules = response.data
+      }
+      catch (error) {
+        console.log(error)
+      }
+    },
+    async fetchHouseRule(id: number) {
+      try {
+        const response = await axios.get(API_URL + '/' + id, {
+          headers: {
+            'Authorization': API_TOKEN
+          }
+        })
+        this.houseRules.data.entities.map((entity: any) => {
+          if (entity.id === id) {
+            console.log(entity)
+            console.log(response.data.data)
+            entity = response.data.data
+          }
+        })
       }
       catch (error) {
         console.log(error)

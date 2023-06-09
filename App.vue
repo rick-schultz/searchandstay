@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, onBeforeMount } from "vue";
-import { getActivePinia } from "pinia";
+import { ref } from "vue";
 import { useHouseRulesStore } from "@/store/houseRules";
 
 const drawer = ref(false);
@@ -9,10 +8,12 @@ const toggleDrawer = () => {
   drawer.value = !drawer.value;
 };
 
-const store = useHouseRulesStore(getActivePinia());
+const store = useHouseRulesStore();
 
-onBeforeMount(() => {
-  store.fetchHouseRules(1);
+const loaded = ref(false);
+
+store.fetchHouseRules(1).then(() => {
+  loaded.value = true;
 });
 </script>
 
@@ -40,7 +41,11 @@ onBeforeMount(() => {
       <v-container>
         <NewHouseRule />
       </v-container>
-      <NuxtPage />
+      <v-container>
+        <v-row data-aos="fade-left">
+          <HouseRuleList v-if="loaded" />
+        </v-row>
+      </v-container>
     </v-main>
     <Footer />
   </v-app>

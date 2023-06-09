@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, toRefs } from "vue";
-import { getActivePinia } from "pinia";
 import { useHouseRulesStore } from "@/store/houseRules";
 import { Entity } from "@/types";
 
@@ -12,7 +11,7 @@ const toggleDialog = () => {
   activeValue.value = active.value;
 };
 
-const store = useHouseRulesStore(getActivePinia());
+const store = useHouseRulesStore();
 
 interface Prop extends Entity {
   id: number;
@@ -29,7 +28,13 @@ const newName = ref(name.value);
 
 const newActive = ref(1);
 
-const activeValue = ref(active.value);
+const getActiveValue = () => {
+  store.fetchHouseRule(id.value).then(() => {
+    activeValue.value = active.value;
+  });
+};
+
+const activeValue = ref(0);
 
 const editHouseRule = () => {
   store.updateHouseRuleState(
@@ -59,8 +64,14 @@ const updateActiveValue = (newValue: number | boolean) => {
       @click:outside="toggleDialog"
     >
       <template #activator="{ props }">
-        <v-btn color="primary" v-bind="props">
-          <v-icon left> mdi-pencil </v-icon>
+        <v-btn
+          color="primary"
+          v-bind="props"
+          @click="getActiveValue"
+        >
+          <v-icon left>
+            mdi-pencil
+          </v-icon>
         </v-btn>
       </template>
       <v-card class="!tw-p-4">
@@ -69,7 +80,12 @@ const updateActiveValue = (newValue: number | boolean) => {
         </v-card-title>
         <v-card-text>
           <v-container class="tw-flex tw-flex-col">
-            <v-text-field v-model="newName" label="Name *" required autofocus />
+            <v-text-field
+              v-model="newName"
+              label="Name *"
+              required
+              autofocus
+            />
             <v-checkbox
               v-model="activeValue"
               label="Active *"
@@ -82,10 +98,18 @@ const updateActiveValue = (newValue: number | boolean) => {
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="blue-darken-1" variant="text" @click="toggleDialog">
+          <v-btn
+            color="blue-darken-1"
+            variant="text"
+            @click="toggleDialog"
+          >
             Close
           </v-btn>
-          <v-btn color="success" variant="text" @click="editHouseRule">
+          <v-btn
+            color="success"
+            variant="text"
+            @click="editHouseRule"
+          >
             Save
           </v-btn>
         </v-card-actions>

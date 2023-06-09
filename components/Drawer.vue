@@ -5,7 +5,6 @@
         variant="plain"
         :ripple="false"
         class="!tw-text-black hover:!tw-text-gray-500 !tw-opacity-100 focus:!tw-border focus:!tw-border-black"
-        to="/home"
         nuxt
       >
         About Us
@@ -14,7 +13,6 @@
         variant="flat"
         :ripple="false"
         class="!tw-text-black hover:!tw-text-gray-500 !tw-opacity-100 focus:!tw-border focus:!tw-border-black"
-        to="/home"
         nuxt
       >
         Contact

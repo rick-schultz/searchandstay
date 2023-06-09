@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { getActivePinia } from "pinia";
 import { useHouseRulesStore } from "@/store/houseRules";
 
-const store = useHouseRulesStore(getActivePinia());
+const store = useHouseRulesStore();
 
 const dialog = ref(false);
 
@@ -44,7 +43,12 @@ const saveNewHouseRule = () => {
       @click:outside="toggleDialog"
     >
       <template #activator="{ props }">
-        <v-btn color="success" v-bind="props"> List Your Property </v-btn>
+        <v-btn
+          color="success"
+          v-bind="props"
+        >
+          List Your Property
+        </v-btn>
       </template>
       <v-card class="!tw-p-4">
         <v-card-title>
@@ -52,17 +56,34 @@ const saveNewHouseRule = () => {
         </v-card-title>
         <v-card-text>
           <v-container class="tw-flex tw-flex-col">
-            <v-text-field v-model="name" label="Name *" required autofocus />
-            <v-checkbox v-model="isActive" label="Active *" required />
+            <v-text-field
+              v-model="name"
+              label="Name *"
+              required
+              autofocus
+            />
+            <v-checkbox
+              v-model="isActive"
+              label="Active *"
+              required
+            />
           </v-container>
           <small>* Indicates required field</small>
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="blue-darken-1" variant="text" @click="toggleDialog">
+          <v-btn
+            color="blue-darken-1"
+            variant="text"
+            @click="toggleDialog"
+          >
             Close
           </v-btn>
-          <v-btn color="success" variant="text" @click="saveNewHouseRule">
+          <v-btn
+            color="success"
+            variant="text"
+            @click="saveNewHouseRule"
+          >
             Save
           </v-btn>
         </v-card-actions>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { storeToRefs, getActivePinia } from "pinia";
+import { storeToRefs } from "pinia";
 import { useHouseRulesStore } from "@/store/houseRules";
 
-const store = useHouseRulesStore(getActivePinia());
+const store = useHouseRulesStore();
 
 const { houseRules } = storeToRefs(store);
 
@@ -26,20 +26,24 @@ const headers = ["Name", "Active"];
 </script>
 
 <template>
-  <div
-    v-if="entities"
-    class="tw-flex tw-justify-center tw-flex-col tw-items-center tw-w-full"
-  >
+  <div class="tw-flex tw-justify-center tw-flex-col tw-items-center tw-w-full">
     <v-table>
       <thead>
         <tr>
-          <th v-for="header in headers" :key="header" class="text-left">
+          <th
+            v-for="header in headers"
+            :key="header"
+            class="text-left"
+          >
             {{ header }}
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in entities" :key="item.name">
+        <tr
+          v-for="item in entities"
+          :key="item.name"
+        >
           <td>{{ item.name }}</td>
           <td>
             <v-checkbox
@@ -59,7 +63,10 @@ const headers = ["Name", "Active"];
           <td>
             <div class="tw-grid tw-grid-cols-2 tw-items-center tw-gap-2">
               <div>
-                <EditHouseRule v-bind="item" :page="pagination.current_page" />
+                <EditHouseRule
+                  v-bind="item"
+                  :page="pagination.current_page"
+                />
               </div>
               <DeleteConfirmation
                 v-bind="item"
