@@ -8,7 +8,7 @@ const dialog = ref(false);
 const toggleDialog = () => {
   dialog.value = !dialog.value;
   newName.value = name.value;
-  activeValue.value = active.value;
+  active.value === 1 ? activeValue.value = true : activeValue.value = false;
 };
 
 const store = useHouseRulesStore();
@@ -26,32 +26,34 @@ const { id, name, active, page } = toRefs(prop);
 
 const newName = ref(name.value);
 
-const newActive = ref(1);
+const newActive = ref(0);
 
 const getActiveValue = () => {
   store.fetchHouseRule(id.value).then(() => {
-    activeValue.value = active.value;
+    if (active.value === 1) {
+      newActive.value = 1;
+      activeValue.value = true;
+    } else {
+      newActive.value = 0;
+      activeValue.value = false;
+    }
   });
 };
 
-const activeValue = ref(0);
+const activeValue = ref(true);
 
 const editHouseRule = () => {
   store.updateHouseRuleState(
     id.value,
     newName.value,
-    newActive.value,
+    newActive.value === 1 ? 0 : 1,
     page.value
   );
   toggleDialog();
 };
 
 const updateActiveValue = (newValue: number | boolean) => {
-  if (newValue === 1) {
-    newActive.value = 0;
-  } else {
-    newActive.value = 1;
-  }
+  newValue === true ? newActive.value = 1 : newActive.value = 0;
 };
 </script>
 
@@ -90,7 +92,6 @@ const updateActiveValue = (newValue: number | boolean) => {
               v-model="activeValue"
               label="Active *"
               required
-              :value="1"
               @update:model-value="updateActiveValue($event)"
             />
           </v-container>
