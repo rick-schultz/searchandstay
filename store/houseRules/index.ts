@@ -1,23 +1,19 @@
-import { defineStore } from 'pinia'
-// import { useRuntimeConfig } from '#imports'
 import axios from 'axios'
-import { HouseRulesProps } from '@/types';
-
-// const { apiUrl: API_URL, apiToken: API_TOKEN }  = useRuntimeConfig()
-
-const API_URL = 'https://sys-dev.searchandstay.com/api/admin/house_rules'
-const API_TOKEN = 'Bearer 40fe071962846075452a4f6123ae71697463cad20f51e237e2035b41af0513d8'
+import { defineStore } from 'pinia'
+import { HouseRulesProps, Entity } from '@/types';
 
 export const useHouseRulesStore = defineStore('houseRules', {
   state: () => ({
+    API_URL: useRuntimeConfig().public.API_URL,
+    API_TOKEN: useRuntimeConfig().public.API_TOKEN,
     houseRules: {} as HouseRulesProps
   }),
   actions: {
     async fetchHouseRules(page: number = 1) {
       try {
-        const response = await axios.get(API_URL + '?page=' + page, {
+        const response = await axios.get(this.API_URL + '?page=' + page, {
           headers: {
-            'Authorization': API_TOKEN
+            'Authorization': this.API_TOKEN
           }
         })
         this.houseRules = response.data
@@ -28,15 +24,13 @@ export const useHouseRulesStore = defineStore('houseRules', {
     },
     async fetchHouseRule(id: number) {
       try {
-        const response = await axios.get(API_URL + '/' + id, {
+        const response = await axios.get(this.API_URL + '/' + id, {
           headers: {
-            'Authorization': API_TOKEN
+            'Authorization': this.API_TOKEN
           }
         })
-        this.houseRules.data.entities.map((entity: any) => {
+        this.houseRules.data.entities.map((entity: Entity) => {
           if (entity.id === id) {
-            console.log(entity)
-            console.log(response.data.data)
             entity = response.data.data
           }
         })
@@ -48,14 +42,14 @@ export const useHouseRulesStore = defineStore('houseRules', {
     async updateHouseRuleState(id: number, name: string, active: number, page: number = 1) {
       const newStatus = active === 1 ? 0 : 1
       try {
-        await axios.put(API_URL + '/' + id, {
+        await axios.put(this.API_URL + '/' + id, {
           house_rules: {
             name: name,
             active: newStatus
           }
         }, {
           headers: {
-            'Authorization': API_TOKEN
+            'Authorization': this.API_TOKEN
           }
         })
         this.fetchHouseRules(page)
@@ -66,9 +60,9 @@ export const useHouseRulesStore = defineStore('houseRules', {
     },
     async removeHouseRule(id: number, page: number = 1) {
       try {
-        await axios.delete(API_URL + '/' + id, {
+        await axios.delete(this.API_URL + '/' + id, {
           headers: {
-            'Authorization': API_TOKEN
+            'Authorization': this.API_TOKEN
           }
         })
         this.fetchHouseRules(page)
@@ -79,14 +73,14 @@ export const useHouseRulesStore = defineStore('houseRules', {
     },
     async addHouseRule(name: string, active: number, page: number = 1) {
       try {
-        await axios.post(API_URL, {
+        await axios.post(this.API_URL, {
           house_rules: {
             name: name,
             active: active,
           }
         }, {
           headers: {
-            'Authorization': API_TOKEN
+            'Authorization': this.API_TOKEN
           }
         })
         this.fetchHouseRules(page)
